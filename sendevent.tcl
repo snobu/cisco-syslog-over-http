@@ -313,12 +313,14 @@ proc http_wait {token} {
 # My actual event code
 
 set url "http://some.http.destination:8000"
-set msg [lindex $argv 0]
+set rawmsg [lindex $argv 0]
 set timestamp [clock format [clock seconds] -format "%Y-%m-%dT%H:%M:%S"]
+# Strip quotes from syslog message
+set cleanmsg [string map { "\"" "" } $rawmsg]
 
-set jsonbody "{
+set json "{
     \"RouterTimestamp\": \"$timestamp\",
-    \"Message\": \"$msg\"
+    \"Message\": \"$cleanmsg\"
 }\n"
 
-set res [http_get $url -query $jsonbody]
+set res [http_get $url -query $json]
