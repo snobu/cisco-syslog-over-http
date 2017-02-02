@@ -313,14 +313,22 @@ proc http_wait {token} {
 # My actual event code
 
 set url "http://some.http.destination:8000"
+
+# Event log message is passed in as "$argv 0".
+# That's the first item in $argv (which is a list)
 set rawmsg [lindex $argv 0]
+
+# Get time stamp at source
 set timestamp [clock format [clock seconds] -format "%Y-%m-%dT%H:%M:%S"]
+
 # Strip quotes from syslog message
 set cleanmsg [string map { "\"" "" } $rawmsg]
 
+# Build the JSON payload
 set json "{
     \"RouterTimestamp\": \"$timestamp\",
     \"Message\": \"$cleanmsg\"
 }\n"
 
+# Send the HTTP POST
 set res [http_get $url -query $json]
