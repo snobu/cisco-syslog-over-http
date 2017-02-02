@@ -3,6 +3,7 @@ Send Syslog messages over HTTP from Cisco EEM TCL
 
 ### Event Manager Applet configuration
 
+IOS Version: 15.1(3)T1
 ```ios
 CISCO-1811#sh run | s event
 event manager directory user policy "flash:/"
