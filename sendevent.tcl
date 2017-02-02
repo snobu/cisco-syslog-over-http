@@ -331,4 +331,8 @@ set json "{
 }\n"
 
 # Send the HTTP POST
-set res [http_get $url -query $json]
+if {[catch {http_get $url -query $json} token]} {
+    puts "HTTP POST request failed: $token"
+} else {
+    # Everything is fine
+}
